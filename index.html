@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدير السكري الذكي</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Welcome/Landing Section -->
+    <div class="welcome-section" id="welcomeSection">
+        <div class="hero-background">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">مدير السكري الذكي</h1>
+                    <p class="hero-subtitle">ذكاء اصطناعي لإدارة أفضل لمرض السكري</p>
+                    <button class="btn btn--primary btn--hero" id="startBtn">ابدأ الآن</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How It Works Section -->
+        <div class="how-it-works">
+            <h2>كيف يعمل؟</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">📝</div>
+                    <h3>الخطوة 1</h3>
+                    <p>أدخل معلوماتك الشخصية</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🍽️</div>
+                    <h3>الخطوة 2</h3>
+                    <p>اختر طعامك المفضل</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">📊</div>
+                    <h3>الخطوة 3</h3>
+                    <p>احصل على توقعات دقيقة</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">💡</div>
+                    <h3>الخطوة 4</h3>
+                    <p>تابع نصائح صحية</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2>المميزات</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-emoji">🎯</span>
+                    <span>توقعات دقيقة لسكر الدم</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-emoji">💊</span>
+                    <span>حساب جرعة الأنسولين</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-emoji">🍎</span>
+                    <span>قاعدة بيانات شاملة للأطعمة</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-emoji">📊</span>
+                    <span>رسوم بيانية تفاعلية</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-emoji">🔬</span>
+                    <span>مبني على البحث العلمي</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-emoji">⚠️</span>
+                    <span>أداة تعليمية - استشر طبيبك</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header with Progress -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>مدير السكري الذكي</h1>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="step-indicator" id="stepIndicator">الخطوة 1 من 4</div>
+            </div>
+        </header>
+
+        <!-- Step 1: Personal Information -->
+        <div class="step-container active" id="step1">
+            <div class="step-content">
+                <div class="step-header">
+                    <h2>معلوماتك الشخصية</h2>
+                    <p>أدخل بياناتك الأساسية لحساب توقعات دقيقة</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="glass-card">
+                        <div class="form-group">
+                            <label for="age" class="form-label">العمر (سنة)</label>
+                            <input type="number" id="age" class="form-control" placeholder="25" min="18" max="100">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="weight" class="form-label">الوزن (كيلوغرام)</label>
+                            <input type="number" id="weight" class="form-control" placeholder="70" min="30" max="200" step="0.1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="height" class="form-label">الطول (سم)</label>
+                            <input type="number" id="height" class="form-control" placeholder="175" min="100" max="250">
+                        </div>
+                        
+                        <div class="bmi-display" id="bmiDisplay">
+                            <span class="bmi-label">مؤشر كتلة الجسم:</span>
+                            <span class="bmi-value" id="bmiValue">--</span>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card">
+                        <div class="form-group">
+                            <label for="diabetesType" class="form-label">نوع السكري</label>
+                            <select id="diabetesType" class="form-control">
+                                <option value="">اختر النوع</option>
+                                <option value="type1">النوع الأول</option>
+                                <option value="type2">النوع الثاني</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="currentBG" class="form-label">سكر الدم الحالي (ملغ/ديسيلتر)</label>
+                            <input type="number" id="currentBG" class="form-control" placeholder="120" min="30" max="500">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timeSinceLastMeal" class="form-label">الوقت منذ آخر وجبة</label>
+                            <select id="timeSinceLastMeal" class="form-control">
+                                <option value="0">أكلت للتو / 0 ساعات</option>
+                                <option value="0.5">30 دقيقة</option>
+                                <option value="1">ساعة واحدة</option>
+                                <option value="1.5">ساعة ونصف</option>
+                                <option value="2">ساعتان</option>
+                                <option value="3">3 ساعات</option>
+                                <option value="4">4 ساعات</option>
+                                <option value="5">5 ساعات</option>
+                                <option value="6">6+ ساعات</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn--primary" id="nextStep1">التالي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Food Selection -->
+        <div class="step-container" id="step2">
+            <div class="step-content">
+                <div class="step-header">
+                    <h2>اختيار الطعام</h2>
+                    <p>اختر الأطعمة التي تريد تناولها</p>
+                </div>
+                
+                <div class="food-selection-container">
+                    <div class="food-search-panel glass-card">
+                        <div class="form-group">
+                            <label for="foodCategory" class="form-label">فئة الطعام</label>
+                            <select id="foodCategory" class="form-control">
+                                <option value="">جميع الفئات</option>
+                                <option value="حبوب">حبوب</option>
+                                <option value="فواكه">فواكه</option>
+                                <option value="خضروات">خضروات</option>
+                                <option value="ألبان">ألبان</option>
+                                <option value="بقوليات">بقوليات</option>
+                                <option value="وجبات خفيفة">وجبات خفيفة</option>
+                                <option value="حلويات">حلويات</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="foodSearch" class="form-label">اختر الطعام</label>
+                            <select id="foodSearch" class="form-control">
+                                <option value="">اختر طعاماً...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="quantity-selector">
+                            <label for="quantity" class="form-label">الكمية</label>
+                            <div class="quantity-controls">
+                                <button type="button" class="btn btn--outline quantity-btn" id="decreaseBtn">-</button>
+                                <input type="number" id="quantity" class="form-control quantity-input" value="1" min="0.1" max="10" step="0.1">
+                                <button type="button" class="btn btn--outline quantity-btn" id="increaseBtn">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="food-preview" id="foodPreview">
+                            <div class="no-selection">اختر طعاماً لمشاهدة المعلومات</div>
+                        </div>
+                        
+                        <button class="btn btn--primary btn--full-width" id="addFoodBtn">إضافة للوجبة</button>
+                    </div>
+                    
+                    <div class="selected-meal-panel glass-card">
+                        <h3>وجبتك الحالية</h3>
+                        <div class="meal-items" id="mealItems">
+                            <div class="empty-meal">لم تضف أي طعام بعد</div>
+                        </div>
+                        
+                        <div class="meal-summary" id="mealSummary">
+                            <div class="summary-item">
+                                <span>إجمالي الكربوهيدرات:</span>
+                                <span id="totalCarbs">0 غرام</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>إجمالي السعرات:</span>
+                                <span id="totalCalories">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn--outline" id="prevStep2">السابق</button>
+                    <button class="btn btn--primary" id="nextStep2">التالي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Results -->
+        <div class="step-container" id="step3">
+            <div class="step-content">
+                <div class="step-header">
+                    <h2>النتائج والتوصيات</h2>
+                    <p>توقعات سكر الدم وتوصيات الأنسولين</p>
+                </div>
+                
+                <div class="results-container" id="resultsContainer">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>جاري حساب التوقعات...</p>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn--outline" id="prevStep3">السابق</button>
+                    <button class="btn btn--secondary" id="startOver">بداية جديدة</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Welcome Button -->
+        <button class="btn btn--outline back-to-welcome" id="backToWelcome">العودة للصفحة الرئيسية</button>
+    </div>
+
+    <!-- Disclaimer Modal -->
+    <div class="modal hidden" id="disclaimerModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <h3>إشعار مهم</h3>
+            <p>هذا التطبيق هو أداة تعليمية للأغراض الإرشادية فقط. النتائج المعروضة تقديرية ولا تغني عن استشارة الطبيب المختص.</p>
+            <p><strong>يجب دائماً استشارة فريق الرعاية الصحية قبل اتخاذ أي قرارات طبية أو تغيير في جرعات الأدوية.</strong></p>
+            <div class="modal-actions">
+                <button class="btn btn--primary" id="agreeBtn">أفهم وأوافق</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
