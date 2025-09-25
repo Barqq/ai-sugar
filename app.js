@@ -1,5 +1,5 @@
 // قاعدة بيانات الأطعمة مع الرموز التعبيرية
-const foodDatabase = [
+const FOOD_DATABASE = [
   {"name": "خبز أبيض", "english": "White Bread", "serving": "شريحة واحدة", "carbs": 15, "calories": 80, "gi": 75, "category": "حبوب", "emoji": "🍞"},
   {"name": "خبز كامل", "english": "Whole Wheat Bread", "serving": "شريحة واحدة", "carbs": 15, "calories": 80, "gi": 74, "category": "حبوب", "emoji": "🥖"},
   {"name": "أرز أبيض", "english": "White Rice", "serving": "كوب مطبوخ", "carbs": 45, "calories": 205, "gi": 73, "category": "حبوب", "emoji": "🍚"},
