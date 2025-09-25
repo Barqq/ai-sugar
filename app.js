@@ -1,399 +1,199 @@
-// قاعدة بيانات الأطعمة مع الرموز التعبيرية
-const FOOD_DATABASE = [
-  {"name": "خبز أبيض", "english": "White Bread", "serving": "شريحة واحدة", "carbs": 15, "calories": 80, "gi": 75, "category": "حبوب", "emoji": "🍞"},
-  {"name": "خبز كامل", "english": "Whole Wheat Bread", "serving": "شريحة واحدة", "carbs": 15, "calories": 80, "gi": 74, "category": "حبوب", "emoji": "🥖"},
-  {"name": "أرز أبيض", "english": "White Rice", "serving": "كوب مطبوخ", "carbs": 45, "calories": 205, "gi": 73, "category": "حبوب", "emoji": "🍚"},
-  {"name": "أرز بني", "english": "Brown Rice", "serving": "كوب مطبوخ", "carbs": 45, "calories": 216, "gi": 68, "category": "حبوب", "emoji": "🍙"},
-  {"name": "مكرونة", "english": "Pasta", "serving": "كوب مطبوخ", "carbs": 45, "calories": 220, "gi": 49, "category": "حبوب", "emoji": "🍝"},
-  {"name": "شوفان", "english": "Oatmeal", "serving": "كوب مطبوخ", "carbs": 30, "calories": 154, "gi": 55, "category": "حبوب", "emoji": "🥣"},
-  {"name": "كينوا", "english": "Quinoa", "serving": "كوب مطبوخ", "carbs": 39, "calories": 222, "gi": 53, "category": "حبوب", "emoji": "🌾"},
-  {"name": "بيجل", "english": "Bagel", "serving": "حبة متوسطة", "carbs": 45, "calories": 245, "gi": 72, "category": "حبوب", "emoji": "🥯"},
-  {"name": "تفاح", "english": "Apple", "serving": "حبة متوسطة", "carbs": 25, "calories": 95, "gi": 36, "category": "فواكه", "emoji": "🍎"},
-  {"name": "موز", "english": "Banana", "serving": "حبة متوسطة", "carbs": 27, "calories": 105, "gi": 51, "category": "فواكه", "emoji": "🍌"},
-  {"name": "برتقال", "english": "Orange", "serving": "حبة متوسطة", "carbs": 15, "calories": 62, "gi": 43, "category": "فواكه", "emoji": "🍊"},
-  {"name": "عنب", "english": "Grapes", "serving": "كوب", "carbs": 16, "calories": 62, "gi": 46, "category": "فواكه", "emoji": "🍇"},
-  {"name": "بطيخ", "english": "Watermelon", "serving": "كوب مقطع", "carbs": 12, "calories": 46, "gi": 76, "category": "فواكه", "emoji": "🍉"},
-  {"name": "تمر", "english": "Dates", "serving": "3 حبات", "carbs": 54, "calories": 200, "gi": 42, "category": "فواكه", "emoji": "🫒"},
-  {"name": "فراولة", "english": "Strawberries", "serving": "كوب", "carbs": 11, "calories": 49, "gi": 40, "category": "فواكه", "emoji": "🍓"},
-  {"name": "مانجو", "english": "Mango", "serving": "كوب مقطع", "carbs": 25, "calories": 107, "gi": 51, "category": "فواكه", "emoji": "🥭"},
-  {"name": "أناناس", "english": "Pineapple", "serving": "كوب مقطع", "carbs": 22, "calories": 82, "gi": 59, "category": "فواكه", "emoji": "🍍"},
-  {"name": "بطاطس مشوية", "english": "Potato (baked)", "serving": "حبة متوسطة", "carbs": 37, "calories": 161, "gi": 78, "category": "خضروات", "emoji": "🥔"},
-  {"name": "بطاطا حلوة", "english": "Sweet Potato", "serving": "حبة متوسطة", "carbs": 24, "calories": 112, "gi": 63, "category": "خضروات", "emoji": "🍠"},
-  {"name": "ذرة", "english": "Corn", "serving": "كوب", "carbs": 31, "calories": 125, "gi": 52, "category": "خضروات", "emoji": "🌽"},
-  {"name": "جزر", "english": "Carrots", "serving": "كوب نيء", "carbs": 12, "calories": 52, "gi": 39, "category": "خضروات", "emoji": "🥕"},
-  {"name": "بروكلي", "english": "Broccoli", "serving": "كوب", "carbs": 6, "calories": 25, "gi": 10, "category": "خضروات", "emoji": "🥦"},
-  {"name": "بازلاء خضراء", "english": "Green Peas", "serving": "كوب", "carbs": 21, "calories": 118, "gi": 48, "category": "خضروات", "emoji": "🫛"},
-  {"name": "حليب قليل الدسم", "english": "Milk (1%)", "serving": "كوب", "carbs": 13, "calories": 102, "gi": 37, "category": "ألبان", "emoji": "🥛"},
-  {"name": "لبن زبادي", "english": "Yogurt (plain)", "serving": "6 أونس", "carbs": 12, "calories": 100, "gi": 41, "category": "ألبان", "emoji": "🍨"},
-  {"name": "لبن يوناني", "english": "Greek Yogurt", "serving": "6 أونس", "carbs": 6, "calories": 100, "gi": 11, "category": "ألبان", "emoji": "🥛"},
-  {"name": "آيس كريم", "english": "Ice Cream", "serving": "نصف كوب", "carbs": 16, "calories": 137, "gi": 51, "category": "ألبان", "emoji": "🍦"},
-  {"name": "فاصولياء سوداء", "english": "Black Beans", "serving": "كوب مطبوخ", "carbs": 41, "calories": 227, "gi": 30, "category": "بقوليات", "emoji": "🫘"},
-  {"name": "حمص", "english": "Chickpeas", "serving": "كوب مطبوخ", "carbs": 45, "calories": 269, "gi": 28, "category": "بقوليات", "emoji": "🫛"},
-  {"name": "عدس", "english": "Lentils", "serving": "كوب مطبوخ", "carbs": 40, "calories": 230, "gi": 32, "category": "بقوليات", "emoji": "🫘"},
-  {"name": "فاصولياء حمراء", "english": "Kidney Beans", "serving": "كوب مطبوخ", "carbs": 40, "calories": 225, "gi": 24, "category": "بقوليات", "emoji": "🫘"},
-  {"name": "شوكولاتة", "english": "Chocolate", "serving": "أونس واحد", "carbs": 16, "calories": 155, "gi": 40, "category": "حلويات", "emoji": "🍫"},
-  {"name": "فشار", "english": "Popcorn", "serving": "3 أكواب", "carbs": 19, "calories": 93, "gi": 65, "category": "وجبات خفيفة", "emoji": "🍿"},
-  {"name": "بسكويت مملح", "english": "Crackers", "serving": "5 قطع", "carbs": 11, "calories": 60, "gi": 70, "category": "وجبات خفيفة", "emoji": "🍪"},
-  {"name": "لوح جرانولا", "english": "Granola Bar", "serving": "لوح واحد", "carbs": 29, "calories": 140, "gi": 61, "category": "وجبات خفيفة", "emoji": "🍫"},
-  {"name": "رقائق بطاطس", "english": "Potato Chips", "serving": "أونس واحد", "carbs": 15, "calories": 152, "gi": 56, "category": "وجبات خفيفة", "emoji": "🥔"},
-  {"name": "سكر أبيض", "english": "White Sugar", "serving": "ملعقة كبيرة", "carbs": 15, "calories": 49, "gi": 65, "category": "حلويات", "emoji": "🧊"},
-  {"name": "عسل", "english": "Honey", "serving": "ملعقة كبيرة", "carbs": 17, "calories": 64, "gi": 61, "category": "حلويات", "emoji": "🍯"},
-  {"name": "كعكة فانيليا", "english": "Cake (vanilla)", "serving": "شريحة", "carbs": 42, "calories": 239, "gi": 78, "category": "حلويات", "emoji": "🍰"}
+// Diabetes Management System JavaScript
+
+// Food database from provided JSON data
+const foodDatabase = [
+  {"name": "White Bread", "serving": "1 slice", "carbs": 15, "calories": 80, "gi": 75, "category": "grains"},
+  {"name": "Whole Wheat Bread", "serving": "1 slice", "carbs": 15, "calories": 80, "gi": 74, "category": "grains"},
+  {"name": "White Rice", "serving": "1 cup cooked", "carbs": 45, "calories": 205, "gi": 73, "category": "grains"},
+  {"name": "Brown Rice", "serving": "1 cup cooked", "carbs": 45, "calories": 216, "gi": 68, "category": "grains"},
+  {"name": "Pasta", "serving": "1 cup cooked", "carbs": 45, "calories": 220, "gi": 49, "category": "grains"},
+  {"name": "Oatmeal", "serving": "1 cup cooked", "carbs": 30, "calories": 154, "gi": 55, "category": "grains"},
+  {"name": "Quinoa", "serving": "1 cup cooked", "carbs": 39, "calories": 222, "gi": 53, "category": "grains"},
+  {"name": "Bagel", "serving": "1 medium", "carbs": 45, "calories": 245, "gi": 72, "category": "grains"},
+  {"name": "Apple", "serving": "1 medium", "carbs": 25, "calories": 95, "gi": 36, "category": "fruits"},
+  {"name": "Banana", "serving": "1 medium", "carbs": 27, "calories": 105, "gi": 51, "category": "fruits"},
+  {"name": "Orange", "serving": "1 medium", "carbs": 15, "calories": 62, "gi": 43, "category": "fruits"},
+  {"name": "Grapes", "serving": "1 cup", "carbs": 16, "calories": 62, "gi": 46, "category": "fruits"},
+  {"name": "Watermelon", "serving": "1 cup diced", "carbs": 12, "calories": 46, "gi": 76, "category": "fruits"},
+  {"name": "Dates", "serving": "3 dates", "carbs": 54, "calories": 200, "gi": 42, "category": "fruits"},
+  {"name": "Strawberries", "serving": "1 cup", "carbs": 11, "calories": 49, "gi": 40, "category": "fruits"},
+  {"name": "Mango", "serving": "1 cup diced", "carbs": 25, "calories": 107, "gi": 51, "category": "fruits"},
+  {"name": "Pineapple", "serving": "1 cup diced", "carbs": 22, "calories": 82, "gi": 59, "category": "fruits"},
+  {"name": "Potato (baked)", "serving": "1 medium", "carbs": 37, "calories": 161, "gi": 78, "category": "vegetables"},
+  {"name": "Sweet Potato", "serving": "1 medium", "carbs": 24, "calories": 112, "gi": 63, "category": "vegetables"},
+  {"name": "Corn", "serving": "1 cup", "carbs": 31, "calories": 125, "gi": 52, "category": "vegetables"},
+  {"name": "Carrots", "serving": "1 cup raw", "carbs": 12, "calories": 52, "gi": 39, "category": "vegetables"},
+  {"name": "Broccoli", "serving": "1 cup", "carbs": 6, "calories": 25, "gi": 10, "category": "vegetables"},
+  {"name": "Green Peas", "serving": "1 cup", "carbs": 21, "calories": 118, "gi": 48, "category": "vegetables"},
+  {"name": "Milk (1%)", "serving": "1 cup", "carbs": 13, "calories": 102, "gi": 37, "category": "dairy"},
+  {"name": "Yogurt (plain)", "serving": "6 oz", "carbs": 12, "calories": 100, "gi": 41, "category": "dairy"},
+  {"name": "Greek Yogurt", "serving": "6 oz", "carbs": 6, "calories": 100, "gi": 11, "category": "dairy"},
+  {"name": "Ice Cream", "serving": "1/2 cup", "carbs": 16, "calories": 137, "gi": 51, "category": "dairy"},
+  {"name": "Black Beans", "serving": "1 cup cooked", "carbs": 41, "calories": 227, "gi": 30, "category": "legumes"},
+  {"name": "Chickpeas", "serving": "1 cup cooked", "carbs": 45, "calories": 269, "gi": 28, "category": "legumes"},
+  {"name": "Lentils", "serving": "1 cup cooked", "carbs": 40, "calories": 230, "gi": 32, "category": "legumes"},
+  {"name": "Kidney Beans", "serving": "1 cup cooked", "carbs": 40, "calories": 225, "gi": 24, "category": "legumes"},
+  {"name": "Chocolate", "serving": "1 oz", "carbs": 16, "calories": 155, "gi": 40, "category": "snacks"},
+  {"name": "Popcorn", "serving": "3 cups", "carbs": 19, "calories": 93, "gi": 65, "category": "snacks"},
+  {"name": "Crackers", "serving": "5 pieces", "carbs": 11, "calories": 60, "gi": 70, "category": "snacks"},
+  {"name": "Granola Bar", "serving": "1 bar", "carbs": 29, "calories": 140, "gi": 61, "category": "snacks"},
+  {"name": "Potato Chips", "serving": "1 oz", "carbs": 15, "calories": 152, "gi": 56, "category": "snacks"},
+  {"name": "White Sugar", "serving": "1 tbsp", "carbs": 15, "calories": 49, "gi": 65, "category": "sweets"},
+  {"name": "Honey", "serving": "1 tbsp", "carbs": 17, "calories": 64, "gi": 61, "category": "sweets"},
+  {"name": "Cake (vanilla)", "serving": "1 slice", "carbs": 42, "calories": 239, "gi": 78, "category": "sweets"}
 ];
 
-// متغيرات التطبيق
-let currentStep = 1;
+// Application state
 let currentMeal = [];
+let mealHistory = [];
 let chart = null;
 
-// تهيئة التطبيق
+// DOM elements
+const elements = {
+    // Patient form elements
+    age: document.getElementById('age'),
+    weight: document.getElementById('weight'),
+    height: document.getElementById('height'),
+    diabetesType: document.getElementById('diabetesType'),
+    currentBG: document.getElementById('currentBG'),
+    timeSinceLastMeal: document.getElementById('timeSinceLastMeal'),
+    
+    // Food selection elements
+    foodSearch: document.getElementById('foodSearch'),
+    quantity: document.getElementById('quantity'),
+    foodInfo: document.getElementById('foodInfo'),
+    foodDetails: document.getElementById('foodDetails'),
+    addFoodBtn: document.getElementById('addFoodBtn'),
+    
+    // Custom food elements
+    customFoodName: document.getElementById('customFoodName'),
+    customCarbs: document.getElementById('customCarbs'),
+    customGI: document.getElementById('customGI'),
+    addCustomFoodBtn: document.getElementById('addCustomFoodBtn'),
+    
+    // Meal summary elements
+    mealSummary: document.getElementById('mealSummary'),
+    mealItems: document.getElementById('mealItems'),
+    totalCarbs: document.getElementById('totalCarbs'),
+    totalCalories: document.getElementById('totalCalories'),
+    calculateBtn: document.getElementById('calculateBtn'),
+    
+    // Results elements
+    resultsContent: document.getElementById('resultsContent'),
+    chartContainer: document.getElementById('chartContainer'),
+    recommendations: document.getElementById('recommendations'),
+    recommendationsList: document.getElementById('recommendationsList'),
+    
+    // History elements
+    historyTableBody: document.getElementById('historyTableBody')
+};
+
+// Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('تم تحميل التطبيق');
-    initializeApp();
+    initializeFoodDropdown();
+    setupEventListeners();
+    updateMealSummary();
 });
 
-function initializeApp() {
-    // إظهار المودال التحذيري
-    showDisclaimer();
+// Initialize food dropdown with database items
+function initializeFoodDropdown() {
+    const foodSelect = elements.foodSearch;
     
-    // إعداد مستمعي الأحداث
-    setupEventListeners();
-    
-    // ملء قوائم الطعام
-    populateFoodDropdowns();
-    
-    // تحديث العرض
-    updateMealDisplay();
-    updateFoodPreview();
-}
-
-function showDisclaimer() {
-    const disclaimerModal = document.getElementById('disclaimerModal');
-    if (disclaimerModal) {
-        disclaimerModal.classList.remove('hidden');
-    }
-}
-
-function setupEventListeners() {
-    // أزرار التنقل الرئيسية
-    const startBtn = document.getElementById('startBtn');
-    const backToWelcome = document.getElementById('backToWelcome');
-    const agreeBtn = document.getElementById('agreeBtn');
-    const modalOverlay = document.getElementById('modalOverlay');
-    
-    if (startBtn) {
-        startBtn.onclick = startApp;
-    }
-    
-    if (backToWelcome) {
-        backToWelcome.onclick = backToWelcome;
-    }
-    
-    if (agreeBtn) {
-        agreeBtn.onclick = closeDisclaimer;
-    }
-    
-    if (modalOverlay) {
-        modalOverlay.onclick = closeDisclaimer;
-    }
-    
-    // أزرار التنقل بين الخطوات
-    const nextStep1 = document.getElementById('nextStep1');
-    const prevStep2 = document.getElementById('prevStep2');
-    const nextStep2 = document.getElementById('nextStep2');
-    const prevStep3 = document.getElementById('prevStep3');
-    const startOver = document.getElementById('startOver');
-    
-    if (nextStep1) {
-        nextStep1.onclick = function() {
-            console.log('تم النقر على زر التالي للخطوة 1');
-            if (validateStep1()) {
-                navigateToStep(2);
-            }
-        };
-    }
-    
-    if (prevStep2) {
-        prevStep2.onclick = () => navigateToStep(1);
-    }
-    
-    if (nextStep2) {
-        nextStep2.onclick = function() {
-            if (validateStep2()) {
-                navigateToStep(3);
-            }
-        };
-    }
-    
-    if (prevStep3) {
-        prevStep3.onclick = () => navigateToStep(2);
-    }
-    
-    if (startOver) {
-        startOver.onclick = startOver;
-    }
-    
-    // حسابات BMI
-    const ageInput = document.getElementById('age');
-    const weightInput = document.getElementById('weight');
-    const heightInput = document.getElementById('height');
-    
-    if (ageInput) {
-        ageInput.oninput = calculateBMI;
-        ageInput.onchange = calculateBMI;
-    }
-    if (weightInput) {
-        weightInput.oninput = calculateBMI;
-        weightInput.onchange = calculateBMI;
-    }
-    if (heightInput) {
-        heightInput.oninput = calculateBMI;
-        heightInput.onchange = calculateBMI;
-    }
-    
-    // اختيار الطعام
-    const foodCategory = document.getElementById('foodCategory');
-    const foodSearch = document.getElementById('foodSearch');
-    const quantity = document.getElementById('quantity');
-    const decreaseBtn = document.getElementById('decreaseBtn');
-    const increaseBtn = document.getElementById('increaseBtn');
-    const addFoodBtn = document.getElementById('addFoodBtn');
-    
-    if (foodCategory) {
-        foodCategory.onchange = filterFoodsByCategory;
-    }
-    
-    if (foodSearch) {
-        foodSearch.onchange = updateFoodPreview;
-    }
-    
-    if (quantity) {
-        quantity.oninput = updateFoodPreview;
-        quantity.onchange = updateFoodPreview;
-    }
-    
-    if (decreaseBtn) {
-        decreaseBtn.onclick = () => adjustQuantity(-0.1);
-    }
-    
-    if (increaseBtn) {
-        increaseBtn.onclick = () => adjustQuantity(0.1);
-    }
-    
-    if (addFoodBtn) {
-        addFoodBtn.onclick = addFoodToMeal;
-    }
-}
-
-function startApp() {
-    const welcomeSection = document.getElementById('welcomeSection');
-    const appContainer = document.getElementById('appContainer');
-    
-    if (welcomeSection) {
-        welcomeSection.classList.add('hidden');
-    }
-    if (appContainer) {
-        appContainer.classList.remove('hidden');
-    }
-    
-    navigateToStep(1);
-}
-
-function backToWelcomeFunc() {
-    const appContainer = document.getElementById('appContainer');
-    const welcomeSection = document.getElementById('welcomeSection');
-    
-    if (appContainer) {
-        appContainer.classList.add('hidden');
-    }
-    if (welcomeSection) {
-        welcomeSection.classList.remove('hidden');
-    }
-    
-    resetApp();
-}
-
-function closeDisclaimer() {
-    const disclaimerModal = document.getElementById('disclaimerModal');
-    if (disclaimerModal) {
-        disclaimerModal.classList.add('hidden');
-    }
-}
-
-function navigateToStep(stepNumber) {
-    console.log(`الانتقال للخطوة ${stepNumber}`);
-    
-    // إخفاء جميع الخطوات
-    document.querySelectorAll('.step-container').forEach(step => {
-        step.classList.remove('active');
-    });
-    
-    // إظهار الخطوة المطلوبة
-    const targetStep = document.getElementById(`step${stepNumber}`);
-    if (targetStep) {
-        targetStep.classList.add('active');
-        currentStep = stepNumber;
-        
-        // تحديث شريط التقدم
-        updateProgress();
-        
-        console.log(`تم الانتقال بنجاح للخطوة ${stepNumber}`);
-        
-        // تنفيذ إجراءات خاصة بالخطوة
-        if (stepNumber === 3) {
-            calculatePredictions();
+    // Sort foods by category and name
+    const sortedFoods = foodDatabase.sort((a, b) => {
+        if (a.category !== b.category) {
+            return a.category.localeCompare(b.category);
         }
-    }
-}
-
-function updateProgress() {
-    const progress = (currentStep / 3) * 100;
-    const progressFill = document.getElementById('progressFill');
-    const stepIndicator = document.getElementById('stepIndicator');
+        return a.name.localeCompare(b.name);
+    });
     
-    if (progressFill) {
-        progressFill.style.width = `${progress}%`;
-    }
-    if (stepIndicator) {
-        stepIndicator.textContent = `الخطوة ${currentStep} من 3`;
-    }
-}
-
-function calculateBMI() {
-    const weightInput = document.getElementById('weight');
-    const heightInput = document.getElementById('height');
-    const bmiValue = document.getElementById('bmiValue');
-    
-    if (!weightInput || !heightInput || !bmiValue) return;
-    
-    const weight = parseFloat(weightInput.value);
-    const height = parseFloat(heightInput.value);
-    
-    if (weight > 0 && height > 0) {
-        const heightInMeters = height / 100;
-        const bmi = weight / (heightInMeters * heightInMeters);
-        const bmiText = bmi.toFixed(1);
-        let category = '';
-        
-        if (bmi < 18.5) category = '(نحيف)';
-        else if (bmi < 25) category = '(طبيعي)';
-        else if (bmi < 30) category = '(زيادة وزن)';
-        else category = '(سمنة)';
-        
-        bmiValue.textContent = `${bmiText} ${category}`;
-        console.log(`تم حساب BMI: ${bmiText} ${category}`);
-    } else {
-        bmiValue.textContent = '--';
-    }
-}
-
-function populateFoodDropdowns() {
-    const foodSearch = document.getElementById('foodSearch');
-    if (!foodSearch) return;
-    
-    const sortedFoods = [...foodDatabase].sort((a, b) => a.name.localeCompare(b.name, 'ar'));
-    
+    let currentCategory = '';
     sortedFoods.forEach(food => {
+        if (food.category !== currentCategory) {
+            currentCategory = food.category;
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
+            foodSelect.appendChild(optgroup);
+        }
+        
         const option = document.createElement('option');
         option.value = food.name;
-        option.textContent = `${food.emoji} ${food.name}`;
-        foodSearch.appendChild(option);
+        option.textContent = `${food.name} (${food.serving})`;
+        foodSelect.lastChild.appendChild(option);
     });
 }
 
-function filterFoodsByCategory() {
-    const foodCategory = document.getElementById('foodCategory');
-    const foodSearch = document.getElementById('foodSearch');
+// Setup event listeners
+function setupEventListeners() {
+    // Food selection change
+    elements.foodSearch.addEventListener('change', updateFoodInfo);
     
-    if (!foodCategory || !foodSearch) return;
+    // Add food button
+    elements.addFoodBtn.addEventListener('click', addSelectedFoodToMeal);
     
-    const selectedCategory = foodCategory.value;
+    // Add custom food button
+    elements.addCustomFoodBtn.addEventListener('click', addCustomFoodToMeal);
     
-    // إزالة الخيارات الموجودة (عدا الأول)
-    while (foodSearch.children.length > 1) {
-        foodSearch.removeChild(foodSearch.lastChild);
-    }
+    // Calculate predictions button
+    elements.calculateBtn.addEventListener('click', calculatePredictions);
     
-    // إضافة الأطعمة المفلترة
-    let filteredFoods = selectedCategory ? 
-        foodDatabase.filter(food => food.category === selectedCategory) : 
-        foodDatabase;
-    
-    filteredFoods.sort((a, b) => a.name.localeCompare(b.name, 'ar')).forEach(food => {
-        const option = document.createElement('option');
-        option.value = food.name;
-        option.textContent = `${food.emoji} ${food.name}`;
-        foodSearch.appendChild(option);
+    // Form validation on input
+    const requiredInputs = [elements.age, elements.weight, elements.height, elements.currentBG];
+    requiredInputs.forEach(input => {
+        input.addEventListener('input', validateInput);
     });
-    
-    updateFoodPreview();
 }
 
-function updateFoodPreview() {
-    const foodPreview = document.getElementById('foodPreview');
-    const foodSearch = document.getElementById('foodSearch');
-    const quantity = document.getElementById('quantity');
-    
-    if (!foodPreview || !foodSearch || !quantity) return;
-    
-    const selectedFoodName = foodSearch.value;
-    const quantityValue = parseFloat(quantity.value) || 1;
+// Update food information display
+function updateFoodInfo() {
+    const selectedFoodName = elements.foodSearch.value;
+    const quantity = parseFloat(elements.quantity.value) || 1;
     
     if (!selectedFoodName) {
-        foodPreview.innerHTML = '<div class="no-selection">اختر طعاماً لمشاهدة المعلومات</div>';
+        elements.foodDetails.textContent = 'Select a food to see nutritional information';
         return;
     }
     
     const food = foodDatabase.find(f => f.name === selectedFoodName);
     if (!food) return;
     
-    const totalCarbs = (food.carbs * quantityValue).toFixed(1);
-    const totalCalories = Math.round(food.calories * quantityValue);
+    const totalCarbs = (food.carbs * quantity).toFixed(1);
+    const totalCalories = Math.round(food.calories * quantity);
     
-    foodPreview.innerHTML = `
-        <div class="food-details">
-            <div class="food-name">${food.emoji} ${food.name}</div>
-            <div class="food-info-item">
-                <span>الحصة:</span>
-                <span>${food.serving} × ${quantityValue}</span>
-            </div>
-            <div class="food-info-item">
-                <span>الكربوهيدرات:</span>
-                <span>${totalCarbs} غرام</span>
-            </div>
-            <div class="food-info-item">
-                <span>السعرات:</span>
-                <span>${totalCalories}</span>
-            </div>
-            <div class="food-info-item">
-                <span>المؤشر الغلايسيمي:</span>
-                <span>${food.gi} (${getGICategory(food.gi)})</span>
-            </div>
+    elements.foodDetails.innerHTML = `
+        <div class="food-detail-item">
+            <span class="food-detail-label">Food:</span> ${food.name}
+        </div>
+        <div class="food-detail-item">
+            <span class="food-detail-label">Serving:</span> ${food.serving} × ${quantity}
+        </div>
+        <div class="food-detail-item">
+            <span class="food-detail-label">Carbohydrates:</span> ${totalCarbs}g
+        </div>
+        <div class="food-detail-item">
+            <span class="food-detail-label">Calories:</span> ${totalCalories}
+        </div>
+        <div class="food-detail-item">
+            <span class="food-detail-label">Glycemic Index:</span> ${food.gi} (${getGICategory(food.gi)})
+        </div>
+        <div class="food-detail-item">
+            <span class="food-detail-label">Category:</span> ${food.category}
         </div>
     `;
 }
 
-function adjustQuantity(delta) {
-    const quantity = document.getElementById('quantity');
-    if (!quantity) return;
-    
-    const currentValue = parseFloat(quantity.value) || 1;
-    const newValue = Math.max(0.1, currentValue + delta);
-    quantity.value = newValue.toFixed(1);
-    updateFoodPreview();
-}
-
-function addFoodToMeal() {
-    const foodSearch = document.getElementById('foodSearch');
-    const quantity = document.getElementById('quantity');
-    
-    if (!foodSearch || !quantity) return;
-    
-    const selectedFoodName = foodSearch.value;
-    const quantityValue = parseFloat(quantity.value) || 1;
+// Add selected food to current meal
+function addSelectedFoodToMeal() {
+    const selectedFoodName = elements.foodSearch.value;
+    const quantity = parseFloat(elements.quantity.value) || 1;
     
     if (!selectedFoodName) {
-        alert('الرجاء اختيار طعام أولاً');
+        showError('Please select a food item first.');
+        return;
+    }
+    
+    if (quantity <= 0) {
+        showError('Please enter a valid quantity.');
         return;
     }
     
@@ -401,154 +201,199 @@ function addFoodToMeal() {
     if (!food) return;
     
     const mealItem = {
-        id: Date.now(),
         name: food.name,
-        emoji: food.emoji,
         serving: food.serving,
-        quantity: quantityValue,
-        carbs: food.carbs * quantityValue,
-        calories: food.calories * quantityValue,
+        quantity: quantity,
+        carbs: food.carbs * quantity,
+        calories: food.calories * quantity,
         gi: food.gi,
-        category: food.category
+        category: food.category,
+        isCustom: false
     };
     
     currentMeal.push(mealItem);
-    updateMealDisplay();
+    updateMealSummary();
     
-    // إعادة تعيين الاختيار
-    foodSearch.value = '';
-    quantity.value = '1';
-    updateFoodPreview();
+    // Reset form
+    elements.foodSearch.value = '';
+    elements.quantity.value = '1';
+    updateFoodInfo();
 }
 
-function removeFoodFromMeal(itemId) {
-    currentMeal = currentMeal.filter(item => item.id !== itemId);
-    updateMealDisplay();
-}
-
-function updateMealDisplay() {
-    const mealItems = document.getElementById('mealItems');
-    const totalCarbs = document.getElementById('totalCarbs');
-    const totalCalories = document.getElementById('totalCalories');
+// Add custom food to current meal
+function addCustomFoodToMeal() {
+    const name = elements.customFoodName.value.trim();
+    const carbs = parseFloat(elements.customCarbs.value) || 0;
+    const gi = parseInt(elements.customGI.value) || 50;
+    const quantity = parseFloat(elements.quantity.value) || 1;
     
-    if (!mealItems || !totalCarbs || !totalCalories) return;
-    
-    if (currentMeal.length === 0) {
-        mealItems.innerHTML = '<div class="empty-meal">لم تضف أي طعام بعد</div>';
-        totalCarbs.textContent = '0 غرام';
-        totalCalories.textContent = '0';
+    if (!name) {
+        showError('Please enter a food name.');
         return;
     }
     
-    let carbsSum = 0;
-    let caloriesSum = 0;
+    if (carbs < 0) {
+        showError('Please enter a valid carbohydrate amount.');
+        return;
+    }
     
-    const itemsHtml = currentMeal.map(item => {
-        carbsSum += item.carbs;
-        caloriesSum += item.calories;
+    const mealItem = {
+        name: name,
+        serving: 'custom serving',
+        quantity: quantity,
+        carbs: carbs * quantity,
+        calories: carbs * 4 * quantity, // Approximate calories from carbs
+        gi: gi,
+        category: 'custom',
+        isCustom: true
+    };
+    
+    currentMeal.push(mealItem);
+    updateMealSummary();
+    
+    // Reset form
+    elements.customFoodName.value = '';
+    elements.customCarbs.value = '';
+    elements.customGI.value = '';
+}
+
+// Update meal summary display
+function updateMealSummary() {
+    if (currentMeal.length === 0) {
+        elements.mealItems.innerHTML = '<p>No items added yet</p>';
+        elements.totalCarbs.textContent = '0';
+        elements.totalCalories.textContent = '0';
+        return;
+    }
+    
+    let totalCarbs = 0;
+    let totalCalories = 0;
+    
+    const itemsHtml = currentMeal.map((item, index) => {
+        totalCarbs += item.carbs;
+        totalCalories += item.calories;
         
         return `
             <div class="meal-item">
                 <div class="meal-item-info">
-                    <div class="meal-item-name">${item.emoji} ${item.name}</div>
+                    <div class="meal-item-name">${item.name}</div>
                     <div class="meal-item-details">
-                        ${item.quantity} × ${item.serving} | ${item.carbs.toFixed(1)} غرام كربوهيدرات
+                        ${item.quantity} × ${item.serving} | ${item.carbs.toFixed(1)}g carbs | ${Math.round(item.calories)} cal
                     </div>
                 </div>
-                <button class="remove-btn" onclick="removeFoodFromMeal(${item.id})">×</button>
+                <button class="remove-item-btn" onclick="removeMealItem(${index})">Remove</button>
             </div>
         `;
     }).join('');
     
-    mealItems.innerHTML = itemsHtml;
-    totalCarbs.textContent = `${carbsSum.toFixed(1)} غرام`;
-    totalCalories.textContent = Math.round(caloriesSum).toString();
+    elements.mealItems.innerHTML = itemsHtml;
+    elements.totalCarbs.textContent = totalCarbs.toFixed(1);
+    elements.totalCalories.textContent = Math.round(totalCalories).toString();
 }
 
-function validateStep1() {
-    const age = document.getElementById('age');
-    const weight = document.getElementById('weight');
-    const height = document.getElementById('height');
-    const diabetesType = document.getElementById('diabetesType');
-    const currentBG = document.getElementById('currentBG');
-    
-    if (!age || !weight || !height || !diabetesType || !currentBG) {
-        console.error('عناصر النموذج غير موجودة');
-        return false;
-    }
-    
-    const ageValue = parseFloat(age.value);
-    const weightValue = parseFloat(weight.value);
-    const heightValue = parseFloat(height.value);
-    const diabetesTypeValue = diabetesType.value;
-    const currentBGValue = parseFloat(currentBG.value);
-    
-    if (!ageValue || ageValue < 18 || ageValue > 100) {
-        alert('يرجى إدخال عمر صحيح بين 18 و 100 سنة');
-        return false;
-    }
-    
-    if (!weightValue || weightValue < 30 || weightValue > 200) {
-        alert('يرجى إدخال وزن صحيح بين 30 و 200 كيلوغرام');
-        return false;
-    }
-    
-    if (!heightValue || heightValue < 100 || heightValue > 250) {
-        alert('يرجى إدخال طول صحيح بين 100 و 250 سم');
-        return false;
-    }
-    
-    if (!diabetesTypeValue) {
-        alert('يرجى اختيار نوع السكري');
-        return false;
-    }
-    
-    if (!currentBGValue || currentBGValue < 30 || currentBGValue > 500) {
-        alert('يرجى إدخال مستوى سكر دم صحيح بين 30 و 500 ملغ/ديسيلتر');
-        return false;
-    }
-    
-    console.log('تم التحقق من بيانات الخطوة 1 بنجاح');
-    return true;
+// Remove meal item
+function removeMealItem(index) {
+    currentMeal.splice(index, 1);
+    updateMealSummary();
 }
 
-function validateStep2() {
-    if (currentMeal.length === 0) {
-        alert('يرجى إضافة طعام واحد على الأقل لوجبتك');
-        return false;
+// Validate form inputs
+function validateInput(event) {
+    const input = event.target;
+    const value = parseFloat(input.value);
+    
+    // Clear previous error styling
+    input.classList.remove('error');
+    
+    // Validation rules
+    switch (input.id) {
+        case 'age':
+            if (value < 18 || value > 100) {
+                input.classList.add('error');
+            }
+            break;
+        case 'weight':
+            if (value < 30 || value > 200) {
+                input.classList.add('error');
+            }
+            break;
+        case 'height':
+            if (value < 100 || value > 250) {
+                input.classList.add('error');
+            }
+            break;
+        case 'currentBG':
+            if (value < 30 || value > 500) {
+                input.classList.add('error');
+            }
+            break;
     }
-    return true;
 }
 
+// Calculate blood sugar and insulin predictions
 function calculatePredictions() {
-    const resultsContainer = document.getElementById('resultsContainer');
-    if (!resultsContainer) return;
+    // Validate required inputs
+    if (!validateRequiredInputs()) {
+        return;
+    }
     
-    // إظهار حالة التحميل
-    resultsContainer.innerHTML = `
-        <div class="loading-state">
-            <div class="loading-spinner"></div>
-            <p>جاري حساب التوقعات...</p>
-        </div>
-    `;
+    if (currentMeal.length === 0) {
+        showError('Please add at least one food item to your meal.');
+        return;
+    }
     
-    // محاكاة وقت المعالجة
-    setTimeout(() => {
-        const predictions = generatePredictions();
-        displayResults(predictions);
-    }, 2000);
+    // Get patient data
+    const patientData = {
+        age: parseFloat(elements.age.value),
+        weight: parseFloat(elements.weight.value),
+        height: parseFloat(elements.height.value),
+        diabetesType: elements.diabetesType.value,
+        currentBG: parseFloat(elements.currentBG.value),
+        timeSinceLastMeal: parseFloat(elements.timeSinceLastMeal.value)
+    };
+    
+    // Calculate meal totals
+    const mealData = calculateMealData();
+    
+    // Generate predictions
+    const predictions = generatePredictions(patientData, mealData);
+    
+    // Display results
+    displayResults(predictions, patientData, mealData);
+    
+    // Add to history
+    addToHistory(patientData, mealData, predictions);
 }
 
-function generatePredictions() {
-    // جمع بيانات المريض
-    const age = parseFloat(document.getElementById('age').value);
-    const weight = parseFloat(document.getElementById('weight').value);
-    const height = parseFloat(document.getElementById('height').value);
-    const diabetesType = document.getElementById('diabetesType').value;
-    const currentBG = parseFloat(document.getElementById('currentBG').value);
-    const timeSinceLastMeal = parseFloat(document.getElementById('timeSinceLastMeal').value);
+// Validate required inputs
+function validateRequiredInputs() {
+    const requiredFields = [
+        { element: elements.age, name: 'Age', min: 18, max: 100 },
+        { element: elements.weight, name: 'Weight', min: 30, max: 200 },
+        { element: elements.height, name: 'Height', min: 100, max: 250 },
+        { element: elements.currentBG, name: 'Current Blood Sugar', min: 30, max: 500 },
+        { element: elements.diabetesType, name: 'Diabetes Type', isSelect: true }
+    ];
     
-    // حساب إجماليات الوجبة
+    for (const field of requiredFields) {
+        const value = field.isSelect ? field.element.value : parseFloat(field.element.value);
+        
+        if (field.isSelect && !value) {
+            showError(`Please select ${field.name}.`);
+            return false;
+        }
+        
+        if (!field.isSelect && (isNaN(value) || value < field.min || value > field.max)) {
+            showError(`${field.name} must be between ${field.min} and ${field.max}.`);
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Calculate meal data
+function calculateMealData() {
     let totalCarbs = 0;
     let totalCalories = 0;
     let weightedGI = 0;
@@ -565,185 +410,279 @@ function generatePredictions() {
     
     const averageGI = totalCarbsForGI > 0 ? weightedGI / totalCarbsForGI : 50;
     
-    // حساب التوقعات
-    const heightInMeters = height / 100;
-    const bmi = weight / (heightInMeters * heightInMeters);
-    
-    const baseImpact = diabetesType === 'type1' ? 4 : 2.5;
-    const giMultiplier = averageGI > 70 ? 1.2 : averageGI < 55 ? 0.8 : 1.0;
-    const ageImpact = age > 65 ? 1.1 : 1.0;
-    const bmiImpact = bmi > 30 ? 0.9 : bmi < 20 ? 1.1 : 1.0;
-    const timeImpact = timeSinceLastMeal > 3 ? 1.1 : timeSinceLastMeal < 1 ? 0.8 : 1.0;
-    
-    const bgIncrease = totalCarbs * baseImpact * giMultiplier * ageImpact * bmiImpact * timeImpact;
-    const peakBG = currentBG + bgIncrease;
-    const timeToPeak = averageGI > 70 ? 1.0 : averageGI > 55 ? 1.25 : 1.5;
-    
-    // حساب الأنسولين
-    const carbRatio = diabetesType === 'type1' ? 12 : 15;
-    const correctionFactor = diabetesType === 'type1' ? 40 : 50;
-    const targetBG = 120;
-    
-    const carbCoverage = totalCarbs / carbRatio;
-    const correctionNeeded = Math.max(0, (peakBG - targetBG) / correctionFactor);
-    const totalInsulinDose = carbCoverage + correctionNeeded;
-    
-    // تقييم المخاطر
-    let riskLevel, riskText, riskClass;
-    if (peakBG < 70) {
-        riskLevel = 'critical'; riskText = 'خطر انخفاض السكر'; riskClass = 'risk-critical';
-    } else if (peakBG < 90) {
-        riskLevel = 'medium'; riskText = 'سكر دم منخفض'; riskClass = 'risk-medium';
-    } else if (peakBG > 250) {
-        riskLevel = 'critical'; riskText = 'مرتفع جداً - خطير'; riskClass = 'risk-critical';
-    } else if (peakBG > 180) {
-        riskLevel = 'high'; riskText = 'سكر دم مرتفع'; riskClass = 'risk-high';
-    } else {
-        riskLevel = 'low'; riskText = 'المدى الطبيعي'; riskClass = 'risk-low';
-    }
-    
-    // البيانات للرسم البياني
-    const timePoints = [];
-    const bgValues = [];
-    const timeRange = 4;
-    const steps = 16;
-    
-    for (let i = 0; i <= steps; i++) {
-        const time = (i / steps) * timeRange;
-        timePoints.push(`${time.toFixed(1)} ساعة`);
-        
-        let bgValue;
-        if (time <= timeToPeak) {
-            const progress = time / timeToPeak;
-            const curve = Math.sin(progress * Math.PI / 2);
-            bgValue = currentBG + (bgIncrease * curve);
-        } else {
-            const fallTime = time - timeToPeak;
-            const fallRate = diabetesType === 'type1' ? 20 : 15;
-            bgValue = peakBG - (fallTime * fallRate);
-        }
-        bgValues.push(Math.max(bgValue, 70));
-    }
-    
-    // إنشاء التوصيات
-    const recommendations = generateRecommendations(peakBG, riskLevel, totalCarbs, currentMeal);
-    
     return {
-        currentBG, peakBG: Math.round(peakBG), timeToPeak,
-        totalInsulinDose: Math.round(totalInsulinDose * 10) / 10,
-        carbCoverage: Math.round(carbCoverage * 10) / 10,
-        correction: Math.round(correctionNeeded * 10) / 10,
-        riskLevel, riskText, riskClass, timePoints, bgValues, recommendations,
-        totalCarbs: totalCarbs.toFixed(1), totalCalories: Math.round(totalCalories)
+        totalCarbs,
+        totalCalories,
+        averageGI,
+        items: [...currentMeal]
     };
 }
 
-function generateRecommendations(peakBG, riskLevel, totalCarbs, mealItems) {
+// Generate blood sugar and insulin predictions
+function generatePredictions(patientData, mealData) {
+    const { totalCarbs, averageGI } = mealData;
+    const { diabetesType, currentBG, weight, age, timeSinceLastMeal } = patientData;
+    
+    // Calculate BMI for individual factors
+    const height = patientData.height / 100; // Convert to meters
+    const bmi = weight / (height * height);
+    
+    // Base carb impact (mg/dL per gram of carbs)
+    const baseImpact = diabetesType === 'type1' ? 4 : 2.5;
+    
+    // GI multiplier
+    let giMultiplier = 1.0;
+    if (averageGI > 70) giMultiplier = 1.2; // High GI
+    else if (averageGI < 55) giMultiplier = 0.8; // Low GI
+    
+    // Individual factors
+    const ageImpact = age > 65 ? 1.1 : 1.0;
+    const weightImpact = bmi > 30 ? 0.9 : bmi < 20 ? 1.1 : 1.0;
+    
+    // Time since last meal impact
+    const timeImpact = timeSinceLastMeal > 3 ? 1.1 : timeSinceLastMeal < 1 ? 0.8 : 1.0;
+    
+    // Calculate blood sugar increase
+    const bgIncrease = totalCarbs * baseImpact * giMultiplier * ageImpact * weightImpact * timeImpact;
+    const peakBG = currentBG + bgIncrease;
+    
+    // Calculate time to peak (1-2 hours typically)
+    const timeToPeak = averageGI > 70 ? 1.0 : averageGI > 55 ? 1.25 : 1.5;
+    
+    // Generate time series for chart
+    const timePoints = [];
+    const bgValues = [];
+    const timeRange = 4; // 4 hours
+    const steps = 16; // 15-minute intervals
+    
+    for (let i = 0; i <= steps; i++) {
+        const time = (i / steps) * timeRange;
+        timePoints.push(time);
+        
+        let bgValue;
+        if (time <= timeToPeak) {
+            // Rising phase
+            const progress = time / timeToPeak;
+            const curve = Math.sin(progress * Math.PI / 2); // Smooth curve
+            bgValue = currentBG + (bgIncrease * curve);
+        } else {
+            // Falling phase
+            const fallTime = time - timeToPeak;
+            const fallRate = diabetesType === 'type1' ? 20 : 15; // mg/dL per hour
+            bgValue = peakBG - (fallTime * fallRate);
+        }
+        
+        bgValues.push(Math.max(bgValue, 70)); // Minimum BG
+    }
+    
+    // Insulin calculations
+    const insulinCalc = calculateInsulinDose(patientData, mealData, peakBG);
+    
+    // Risk assessment
+    const riskLevel = assessRisk(peakBG);
+    
+    return {
+        currentBG,
+        peakBG: Math.round(peakBG),
+        bgIncrease: Math.round(bgIncrease),
+        timeToPeak,
+        timePoints,
+        bgValues,
+        insulinDose: insulinCalc.totalDose,
+        insulinBreakdown: insulinCalc.breakdown,
+        riskLevel,
+        recommendations: generateRecommendations(patientData, mealData, peakBG, riskLevel)
+    };
+}
+
+// Calculate insulin dose
+function calculateInsulinDose(patientData, mealData, peakBG) {
+    const { diabetesType, currentBG } = patientData;
+    const { totalCarbs } = mealData;
+    
+    // Insulin-to-carb ratios
+    const carbRatio = diabetesType === 'type1' ? 12 : 15; // grams carbs per unit insulin
+    
+    // Correction factors (mg/dL per unit insulin)
+    const correctionFactor = diabetesType === 'type1' ? 40 : 50;
+    
+    // Target blood sugar
+    const targetBG = 120;
+    
+    // Calculate doses
+    const carbCoverage = totalCarbs / carbRatio;
+    const correctionNeeded = Math.max(0, (peakBG - targetBG) / correctionFactor);
+    const totalDose = carbCoverage + correctionNeeded;
+    
+    return {
+        totalDose: Math.round(totalDose * 10) / 10, // Round to 1 decimal
+        breakdown: {
+            carbCoverage: Math.round(carbCoverage * 10) / 10,
+            correction: Math.round(correctionNeeded * 10) / 10,
+            carbRatio,
+            correctionFactor
+        }
+    };
+}
+
+// Assess risk level
+function assessRisk(peakBG) {
+    if (peakBG < 70) return { level: 'critical', text: 'HYPOGLYCEMIA RISK', color: 'risk-critical' };
+    if (peakBG < 90) return { level: 'low', text: 'Low Blood Sugar', color: 'risk-medium' };
+    if (peakBG <= 180) return { level: 'normal', text: 'Normal Range', color: 'risk-low' };
+    if (peakBG <= 250) return { level: 'high', text: 'High Blood Sugar', color: 'risk-high' };
+    return { level: 'critical', text: 'VERY HIGH - CRITICAL', color: 'risk-critical' };
+}
+
+// Generate recommendations
+function generateRecommendations(patientData, mealData, peakBG, riskLevel) {
     const recommendations = [];
     
-    if (riskLevel === 'critical' && peakBG > 250) {
+    if (riskLevel.level === 'critical' && peakBG > 250) {
         recommendations.push({
-            type: 'عاجل',
-            text: 'سكر الدم المتوقع مرتفع جداً. فكر في تقليل أحجام الحصص أو اختيار بدائل أقل كربوهيدرات. استشر مقدم الرعاية الصحية فوراً.'
+            type: 'URGENT',
+            text: 'Predicted blood sugar is very high. Consider reducing portion sizes or choosing lower-carb alternatives. Consult your healthcare provider.'
         });
     }
     
-    if (riskLevel === 'high') {
+    if (riskLevel.level === 'high') {
         recommendations.push({
-            type: 'الحصة',
-            text: 'فكر في تقليل حجم الوجبة بنسبة 25-50% لتقليل تأثير سكر الدم.'
+            type: 'PORTION',
+            text: 'Consider reducing meal size by 25-50% to lower blood sugar impact.'
         });
+        
+        // Suggest alternatives for high-GI foods
+        const highGIFoods = mealData.items.filter(item => item.gi > 70);
+        if (highGIFoods.length > 0) {
+            recommendations.push({
+                type: 'ALTERNATIVES',
+                text: `Consider lower-GI alternatives: ${generateAlternatives(highGIFoods)}`
+            });
+        }
     }
     
-    if (totalCarbs > 60) {
+    if (mealData.totalCarbs > 60) {
         recommendations.push({
-            type: 'التوقيت',
-            text: 'وجبة عالية الكربوهيدرات. فكر في تقسيمها إلى حصص أصغر أو إضافة البروتين والألياف لإبطاء الامتصاص.'
-        });
-    }
-    
-    const highGIFoods = mealItems.filter(item => item.gi > 70);
-    if (highGIFoods.length > 0) {
-        recommendations.push({
-            type: 'البدائل',
-            text: `أطعمة عالية المؤشر الغلايسيمي في وجبتك: ${highGIFoods.map(f => f.name).join('، ')}. فكر في بدائل أقل في المؤشر الغلايسيمي.`
+            type: 'TIMING',
+            text: 'High-carb meal detected. Consider splitting into smaller portions or adding protein/fiber to slow absorption.'
         });
     }
     
     recommendations.push({
-        type: 'المراقبة',
-        text: 'اختبر سكر الدم بعد 2-3 ساعات من الأكل للتحقق من التوقعات وتعديل الحسابات المستقبلية.'
+        type: 'MONITORING',
+        text: 'Test blood sugar 2-3 hours after eating to validate predictions and adjust future calculations.'
     });
     
     return recommendations;
 }
 
-function displayResults(predictions) {
-    const resultsContainer = document.getElementById('resultsContainer');
-    if (!resultsContainer) return;
+// Generate food alternatives
+function generateAlternatives(highGIFoods) {
+    const alternatives = {
+        'White Bread': 'whole wheat bread or pumpernickel',
+        'White Rice': 'brown rice or quinoa',
+        'Potato (baked)': 'sweet potato or cauliflower',
+        'Watermelon': 'berries or apple',
+        'Bagel': 'whole grain English muffin',
+        'Crackers': 'nuts or seeds'
+    };
     
+    return highGIFoods.map(food => 
+        alternatives[food.name] || 'lower-GI option'
+    ).join(', ');
+}
+
+// Display prediction results
+function displayResults(predictions, patientData, mealData) {
     const resultsHtml = `
-        <div class="results-grid">
-            <div class="result-card ${predictions.riskClass}">
-                <div class="result-icon">🩸</div>
-                <div class="result-title">توقع سكر الدم</div>
-                <div class="result-value">${predictions.peakBG}</div>
-                <div class="result-unit">ملغ/ديسيلتر</div>
+        <div class="prediction-result">
+            <div class="result-card">
+                <div class="result-header">Blood Sugar Prediction</div>
+                <div class="result-value">
+                    ${predictions.peakBG}
+                    <span class="result-unit">mg/dL</span>
+                    <span class="risk-badge ${predictions.riskLevel.color}">${predictions.riskLevel.text}</span>
+                </div>
                 <div class="result-description">
-                    ${predictions.riskText}<br>
-                    الذروة في ${predictions.timeToPeak.toFixed(1)} ساعة
+                    Expected peak in ${predictions.timeToPeak} hours<br>
+                    Increase: +${predictions.bgIncrease} mg/dL from current level
                 </div>
             </div>
             
             <div class="result-card">
-                <div class="result-icon">💉</div>
-                <div class="result-title">توصية الأنسولين</div>
-                <div class="result-value">${predictions.totalInsulinDose}</div>
-                <div class="result-unit">وحدة</div>
-                <div class="result-description">
-                    تغطية كربوهيدرات: ${predictions.carbCoverage} وحدة<br>
-                    تصحيح: ${predictions.correction} وحدة
+                <div class="result-header">Insulin Recommendation</div>
+                <div class="result-value">
+                    ${predictions.insulinDose}
+                    <span class="result-unit">units</span>
+                </div>
+                <div class="insulin-breakdown">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Carb coverage (${mealData.totalCarbs.toFixed(1)}g ÷ ${predictions.insulinBreakdown.carbRatio}):</span>
+                        <span class="breakdown-value">${predictions.insulinBreakdown.carbCoverage} units</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Correction dose:</span>
+                        <span class="breakdown-value">${predictions.insulinBreakdown.correction} units</span>
+                    </div>
+                    <div class="breakdown-item breakdown-total">
+                        <span class="breakdown-label">Total recommended dose:</span>
+                        <span class="breakdown-value">${predictions.insulinDose} units</span>
+                    </div>
                 </div>
             </div>
             
-            <div class="result-card">
-                <div class="result-icon">🍽️</div>
-                <div class="result-title">ملخص الوجبة</div>
-                <div class="result-value">${predictions.totalCarbs}</div>
-                <div class="result-unit">غرام كربوهيدرات</div>
-                <div class="result-description">
-                    إجمالي السعرات: ${predictions.totalCalories}
-                </div>
+            <div class="timeline-prediction">
+                <div class="timeline-header">Predicted Timeline</div>
+                <table class="timeline-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Blood Sugar</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="timeline-time">Now</td>
+                            <td class="timeline-bg">${patientData.currentBG} mg/dL</td>
+                            <td>Current level</td>
+                        </tr>
+                        <tr>
+                            <td class="timeline-time">${predictions.timeToPeak}h</td>
+                            <td class="timeline-bg">${predictions.peakBG} mg/dL</td>
+                            <td>Peak level</td>
+                        </tr>
+                        <tr>
+                            <td class="timeline-time">3h</td>
+                            <td class="timeline-bg">${Math.round(predictions.bgValues[12])} mg/dL</td>
+                            <td>Declining</td>
+                        </tr>
+                        <tr>
+                            <td class="timeline-time">4h</td>
+                            <td class="timeline-bg">${Math.round(predictions.bgValues[15])} mg/dL</td>
+                            <td>Stabilizing</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-        
-        <div class="chart-container" style="position: relative; height: 300px;">
-            <canvas id="bgChart"></canvas>
-        </div>
-        
-        <div class="recommendations-section">
-            <h3>التوصيات الصحية</h3>
-            ${predictions.recommendations.map(rec => `
-                <div class="recommendation-item">
-                    <div class="recommendation-type">${rec.type}</div>
-                    <div class="recommendation-text">${rec.text}</div>
-                </div>
-            `).join('')}
         </div>
     `;
     
-    resultsContainer.innerHTML = resultsHtml;
+    elements.resultsContent.innerHTML = resultsHtml;
     
-    // إنشاء الرسم البياني
-    setTimeout(() => createChart(predictions), 100);
+    // Show and update chart
+    elements.chartContainer.style.display = 'block';
+    updateChart(predictions);
+    
+    // Show recommendations
+    displayRecommendations(predictions.recommendations);
 }
 
-function createChart(predictions) {
-    const chartCanvas = document.getElementById('bgChart');
-    if (!chartCanvas) return;
+// Update blood sugar chart
+function updateChart(predictions) {
+    const ctx = document.getElementById('bgChart').getContext('2d');
     
-    const ctx = chartCanvas.getContext('2d');
-    
+    // Destroy existing chart
     if (chart) {
         chart.destroy();
     }
@@ -751,9 +690,9 @@ function createChart(predictions) {
     chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: predictions.timePoints,
+            labels: predictions.timePoints.map(t => `${t.toFixed(1)}h`),
             datasets: [{
-                label: 'سكر الدم المتوقع',
+                label: 'Blood Sugar (mg/dL)',
                 data: predictions.bgValues,
                 borderColor: '#1FB8CD',
                 backgroundColor: 'rgba(31, 184, 205, 0.1)',
@@ -761,9 +700,7 @@ function createChart(predictions) {
                 fill: true,
                 tension: 0.4,
                 pointRadius: 4,
-                pointBackgroundColor: '#1FB8CD',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2
+                pointBackgroundColor: '#1FB8CD'
             }]
         },
         options: {
@@ -772,68 +709,146 @@ function createChart(predictions) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'التوقع الزمني لسكر الدم',
-                    font: { size: 16, weight: 'bold' },
-                    color: '#1d7483'
+                    text: 'Predicted Blood Sugar Timeline',
+                    font: { size: 16, weight: 'bold' }
                 },
-                legend: { display: false }
+                legend: {
+                    display: false
+                }
             },
             scales: {
-                x: { title: { display: true, text: 'الوقت' } },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time (hours)'
+                    }
+                },
                 y: {
-                    title: { display: true, text: 'سكر الدم (ملغ/ديسيلتر)' },
+                    title: {
+                        display: true,
+                        text: 'Blood Sugar (mg/dL)'
+                    },
                     min: 60,
                     max: Math.max(300, Math.max(...predictions.bgValues) + 20)
+                }
+            },
+            elements: {
+                point: {
+                    hoverRadius: 8
                 }
             }
         }
     });
+    
+    // Add reference lines
+    chart.options.plugins.annotation = {
+        annotations: {
+            normalLow: {
+                type: 'line',
+                yMin: 80,
+                yMax: 80,
+                borderColor: 'green',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                label: {
+                    content: 'Normal Low',
+                    enabled: true
+                }
+            },
+            normalHigh: {
+                type: 'line',
+                yMin: 180,
+                yMax: 180,
+                borderColor: 'orange',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                label: {
+                    content: 'Target Upper',
+                    enabled: true
+                }
+            }
+        }
+    };
 }
 
-function startOverFunc() {
-    resetApp();
-    navigateToStep(1);
-}
-
-function resetApp() {
-    currentStep = 1;
-    currentMeal = [];
-    
-    // إعادة تعيين النماذج
-    const inputs = ['age', 'weight', 'height', 'currentBG'];
-    inputs.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) element.value = '';
-    });
-    
-    const selects = ['diabetesType', 'timeSinceLastMeal', 'foodCategory', 'foodSearch'];
-    selects.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) element.value = element.selectedIndex = 0;
-    });
-    
-    const quantity = document.getElementById('quantity');
-    if (quantity) quantity.value = '1';
-    
-    // إعادة تعيين العروض
-    const bmiValue = document.getElementById('bmiValue');
-    if (bmiValue) bmiValue.textContent = '--';
-    
-    updateMealDisplay();
-    updateFoodPreview();
-    
-    if (chart) {
-        chart.destroy();
-        chart = null;
+// Display recommendations
+function displayRecommendations(recommendations) {
+    if (recommendations.length === 0) {
+        elements.recommendations.style.display = 'none';
+        return;
     }
+    
+    const recommendationsHtml = recommendations.map(rec => `
+        <div class="recommendation-item">
+            <div class="recommendation-type">${rec.type}</div>
+            <div class="recommendation-text">${rec.text}</div>
+        </div>
+    `).join('');
+    
+    elements.recommendationsList.innerHTML = recommendationsHtml;
+    elements.recommendations.style.display = 'block';
 }
 
-// وظائف مساعدة
+// Add prediction to history
+function addToHistory(patientData, mealData, predictions) {
+    const historyItem = {
+        timestamp: new Date(),
+        foods: mealData.items.map(item => `${item.name} (${item.quantity})`).join(', '),
+        totalCarbs: mealData.totalCarbs.toFixed(1),
+        predictedPeak: predictions.peakBG,
+        insulinDose: predictions.insulinDose
+    };
+    
+    mealHistory.push(historyItem);
+    updateHistoryTable();
+    
+    // Don't clear the current meal - users should be able to see what they calculated for
+    // currentMeal = [];
+    // updateMealSummary();
+}
+
+// Update history table
+function updateHistoryTable() {
+    if (mealHistory.length === 0) {
+        elements.historyTableBody.innerHTML = '<tr><td colspan="5" class="no-history">No meal history yet</td></tr>';
+        return;
+    }
+    
+    const historyHtml = mealHistory.slice(-10).reverse().map(item => `
+        <tr>
+            <td>${item.timestamp.toLocaleTimeString()}</td>
+            <td>${item.foods}</td>
+            <td>${item.totalCarbs}g</td>
+            <td>${item.predictedPeak} mg/dL</td>
+            <td>${item.insulinDose} units</td>
+        </tr>
+    `).join('');
+    
+    elements.historyTableBody.innerHTML = historyHtml;
+}
+
+// Utility functions
 function getGICategory(gi) {
-    if (gi < 55) return 'منخفض';
-    if (gi <= 70) return 'متوسط';
-    return 'عالي';
+    if (gi < 55) return 'Low';
+    if (gi <= 70) return 'Medium';
+    return 'High';
 }
 
-// إتاحة الوظائف للنافذة العامة
-window.removeFoodFromMeal = removeFoodFromMeal;
+function showError(message) {
+    // Remove existing error messages
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    
+    // Create new error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    
+    // Insert at top of main content
+    const mainGrid = document.querySelector('.main-grid');
+    mainGrid.insertBefore(errorDiv, mainGrid.firstChild);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
+}
